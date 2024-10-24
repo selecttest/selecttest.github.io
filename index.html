@@ -3,8 +3,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>重定向中...</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -18,32 +25,43 @@
 
         .container {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 80%;
+            width: 90%;
+            max-width: 500px;
+            margin: 15px;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            padding: 0 20px;
         }
 
         .logo {
-            max-width: 200px;
+            width: 100%;
+            max-width: 180px;
             height: auto;
-            margin-bottom: 20px;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         h2 {
             color: #333;
             margin-bottom: 20px;
+            font-size: 1.5rem;
+            padding: 0 10px;
         }
 
         .loader {
-            width: 48px;
-            height: 48px;
-            border: 5px solid #f3f3f3;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 5px solid #00a0e9; /* 改用 FIND logo 的藍色 */
+            border-top: 4px solid #00a0e9;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 15px auto;
         }
 
         @keyframes spin {
@@ -54,38 +72,143 @@
         .message {
             color: #666;
             margin: 15px 0;
+            font-size: 1rem;
+            padding: 0 10px;
         }
 
         .redirect-link {
-            color: #00a0e9; /* 改用 FIND logo 的藍色 */
+            color: #00a0e9;
             text-decoration: none;
             display: inline-block;
             margin-top: 10px;
-            padding: 8px 15px;
-            border: 1px solid #00a0e9; /* 改用 FIND logo 的藍色 */
+            padding: 8px 20px;
+            border: 1px solid #00a0e9;
             border-radius: 5px;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background-color: transparent;
+            margin-bottom: 10px;
         }
 
         .redirect-link:hover {
-            background-color: #00a0e9; /* 改用 FIND logo 的藍色 */
+            background-color: #00a0e9;
             color: white;
         }
 
         .countdown {
             color: #999;
             margin-top: 10px;
-            font-size: 14px;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Styles */
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+                margin: 10px;
+            }
+
+            .logo {
+                max-width: 140px;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .loader {
+                width: 32px;
+                height: 32px;
+                border-width: 3px;
+                border-top-width: 3px;
+            }
+
+            .message {
+                font-size: 0.9rem;
+                margin: 12px 0;
+            }
+
+            .redirect-link {
+                padding: 6px 16px;
+                font-size: 0.9rem;
+            }
+
+            .countdown {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Small Mobile Styles */
+        @media screen and (max-width: 320px) {
+            .container {
+                padding: 12px;
+                margin: 8px;
+            }
+
+            .logo {
+                max-width: 120px;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+
+            .message {
+                font-size: 0.85rem;
+            }
+
+            .redirect-link {
+                padding: 5px 14px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Tablet Styles */
+        @media screen and (min-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+
+            .logo {
+                max-width: 200px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .message {
+                font-size: 1.1rem;
+            }
+
+            .redirect-link {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Touch Device Optimization */
+        @media (hover: none) {
+            .redirect-link:hover {
+                background-color: transparent;
+                color: #00a0e9;
+            }
+
+            .redirect-link:active {
+                background-color: #00a0e9;
+                color: white;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- FIND Logo -->
-        <svg class="logo" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
-            <text x="50" y="100" font-family="serif" font-size="120" font-weight="bold">F<tspan fill="#00a0e9">i</tspan>ND</text>
-            <circle cx="185" cy="30" r="20" fill="#00a0e9"/>
-        </svg>
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/selecttest/selecttest.github.io/main/images/find-logo.png" alt="FIND Logo" class="logo">
+        </div>
 
         <h2>即將進入目標網站</h2>
         <div class="loader"></div>
@@ -95,10 +218,8 @@
     </div>
 
     <script>
-        // 設定目標網址
         const targetUrl = "https://www.find.org.tw/home/index/";
         
-        // 設定倒數計時器
         let timeLeft = 3;
         const timerElement = document.getElementById('timer');
         const countdownInterval = setInterval(() => {
@@ -111,7 +232,6 @@
             }
         }, 1000);
 
-        // 設定手動連結
         document.getElementById('manual-link').href = targetUrl;
     </script>
 </body>
