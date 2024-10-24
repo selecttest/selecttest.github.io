@@ -15,128 +15,183 @@
         html, body {
             height: 100%;
             overflow: hidden;
+            background-color: #f5f5f5;
         }
 
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f5f5f5;
-            min-height: -webkit-fill-available;
+            min-height: 100vh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
         .container {
             text-align: center;
-            padding: 2.5rem 2rem;
             background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            width: 85%;
-            max-width: 400px;
-            margin: auto;
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            height: auto;
-            max-height: 90vh;
+            width: 100%;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            min-height: 100%;
+        }
+
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             gap: 1.8rem;
         }
 
         .logo-container {
-            flex: 0 0 auto;
             padding: 0 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .logo {
             width: 100%;
-            max-width: 250px;
+            max-width: 200px;
             height: auto;
             object-fit: contain;
         }
 
         h2 {
             color: #333;
-            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-size: 1.2rem;
             font-weight: 500;
-            flex: 0 0 auto;
-            margin-bottom: 0.5rem;
-        }
-
-        .loading-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            margin: 0.5rem 0;
-        }
-
-        .loader-container {
-            position: relative;
-            width: 60px;
-            height: 60px;
         }
 
         .loader {
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: 3px solid transparent;
-            border-top-color: #00a0e9;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 1s cubic-bezier(0.76, 0.35, 0.2, 0.75) infinite;
         }
 
-        .loader:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border: 3px solid transparent;
-            border-top-color: rgba(0, 160, 233, 0.6);
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite;
+        .loader-container {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            margin: 0 auto;
         }
+
+        .loader,
+        .loader-inner,
+        .loader-center {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: #00a0e9;
+        }
+
+        .loader-inner {
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 70%;
+            transform: translate(-50%, -50%);
+            border-top-color: rgba(0, 160, 233, 0.6);
+            animation: spin 1.5s cubic-bezier(0.76, 0.35, 0.2, 0.75) infinite reverse;
+        }
+
+        .loader-center {
+            top: 50%;
+            left: 50%;
+            width: 40%;
+            height: 40%;
+            transform: translate(-50%, -50%);
+            border-top-color: rgba(0, 160, 233, 0.3);
+            animation: spin 2s cubic-bezier(0.76, 0.35, 0.2, 0.75) infinite;
+        }
+
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loader {
+            transform: translate(0, 0);
+            animation: spin-outer 1s cubic-bezier(0.76, 0.35, 0.2, 0.75) infinite;
+        }
+
+        @keyframes spin-outer {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fade {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @supports (backdrop-filter: blur(1px)) {
+            .loader, .loader-inner, .loader-center {
+                backdrop-filter: blur(1px);
+            }
+        }
+
+        .bottom-section {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.2rem;
+        }
+
+        .status-message {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
         }
 
         .message {
             color: #666;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            margin: 0;
+            font-size: 0.9rem;
         }
 
         .countdown {
             color: #999;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            margin-top: 0.2rem;
+            font-size: 0.8rem;
         }
 
         .redirect-link {
             color: #00a0e9;
             text-decoration: none;
-            padding: 0.8rem 2rem;
-            border: 2px solid #00a0e9;
-            border-radius: 8px;
+            padding: 0.6rem 1.8rem;
+            border: 1.5px solid #00a0e9;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            font-size: clamp(1rem, 3vw, 1.1rem);
+            font-size: 0.9rem;
             background-color: transparent;
             display: inline-block;
-            margin-top: 0.5rem;
-            min-width: 140px;
+            min-width: 120px;
         }
 
         .redirect-link:hover {
@@ -144,49 +199,38 @@
             color: white;
         }
 
-        /* 高螢幕手機優化 */
-        @media screen and (min-height: 800px) {
+        @supports (padding: max(0px)) {
             .container {
-                padding: 3rem 2rem;
-                gap: 2rem;
-            }
-
-            .logo {
-                max-width: 280px;
-            }
-
-            .loading-section {
-                gap: 1.8rem;
-            }
-
-            .loader-container {
-                width: 70px;
-                height: 70px;
+                padding-top: max(1.5rem, env(safe-area-inset-top));
+                padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
             }
         }
 
-        /* 較小螢幕手機優化 */
         @media screen and (max-height: 700px) {
-            .container {
-                padding: 1.5rem;
+            .main-content {
                 gap: 1.2rem;
             }
 
             .logo {
-                max-width: 200px;
+                max-width: 180px;
+            }
+
+            .loader {
+                width: 35px;
+                height: 35px;
+            }
+
+            .bottom-section {
+                padding: 1rem;
+                gap: 0.8rem;
             }
 
             .loader-container {
-                width: 50px;
-                height: 50px;
-            }
-
-            .loading-section {
-                gap: 1.2rem;
+                width: 35px;
+                height: 35px;
             }
         }
 
-        /* 觸控優化 */
         @media (hover: none) {
             .redirect-link {
                 -webkit-tap-highlight-color: transparent;
@@ -195,42 +239,48 @@
             .redirect-link:active {
                 background-color: #00a0e9;
                 color: white;
+                transform: translateY(1px);
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/selecttest/selecttest.github.io/main/images/find_logo.png" alt="FIND Logo" class="logo">
-        </div>
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/selecttest/selecttest.github.io/main/images/find_logo.png" alt="FIND Logo" class="logo">
+                </div>
 
-        <h2>即將進入FIND</h2>
-        
-        <div class="loading-section">
-            <div class="loader-container">
-                <div class="loader"></div>
+                <h2></h2>
+                
+                <div class="loader-container">
+                    <div class="loader"></div>
+                    <div class="loader-inner"></div>
+                    <div class="loader-center"></div>
             </div>
-            <div>
-                <p class="message">正在為您重定向...</p>
-                <div class="countdown">倒數 <span id="timer">3</span> 秒</div>
+
+            <div class="bottom-section">
+                <div class="status-message">
+                    <p class="message">正在為您重定向...</p>
+                    <div class="countdown">倒數 <span id="timer">3</span> 秒</div>
+                </div>
+                <a id="manual-link" href="#" class="redirect-link">立即前往</a>
             </div>
         </div>
-
-        <a id="manual-link" href="#" class="redirect-link">立即前往</a>
     </div>
 
     <script>
         const targetUrl = "https://www.find.org.tw/home/index/";
         
-        // 修復 iOS Safari 100vh 問題
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-        window.addEventListener('resize', () => {
-            vh = window.innerHeight * 0.01;
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-        });
+        }
+
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', setVH);
 
         let timeLeft = 3;
         const timerElement = document.getElementById('timer');
