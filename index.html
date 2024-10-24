@@ -12,25 +12,99 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+            min-height: 100vh;
+            background-color: #f5f5f5;
         }
-        .message {
+
+        .container {
             text-align: center;
             padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 80%;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3498db;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            color: #666;
+            margin: 15px 0;
+        }
+
+        .redirect-link {
+            color: #3498db;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .redirect-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .countdown {
+            color: #999;
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="message">
-        <h2>正在重定向...</h2>
-        <p>如果沒有自動跳轉，請<a id="manual-link" href="#">點擊這裡</a></p>
+    <div class="container">
+        <h2>即將進入目標網站</h2>
+        <div class="loader"></div>
+        <p class="message">正在為您重定向...</p>
+        <div class="countdown">倒數 <span id="timer">3</span> 秒</div>
+        <a id="manual-link" href="#" class="redirect-link">立即前往</a>
     </div>
+
     <script>
+        // 設定目標網址
+        const targetUrl = "https://www.find.org.tw/index/center/index/DEC/";
+        
+        // 設定倒數計時器
+        let timeLeft = 3;
+        const timerElement = document.getElementById('timer');
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.replace(targetUrl);
+            }
+        }, 1000);
+
+        // 設定手動連結
         document.getElementById('manual-link').href = targetUrl;
     </script>
 </body>
