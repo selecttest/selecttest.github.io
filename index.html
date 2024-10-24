@@ -3,13 +3,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>重定向中...</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
@@ -19,49 +24,88 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             background-color: #f5f5f5;
+            min-height: -webkit-fill-available;
         }
 
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 2.5rem 2rem;
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 500px;
-            margin: 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            width: 85%;
+            max-width: 400px;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            height: auto;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.8rem;
         }
 
         .logo-container {
-            margin-bottom: 20px;
-            padding: 0 20px;
+            flex: 0 0 auto;
+            padding: 0 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .logo {
             width: 100%;
-            max-width: 180px;
+            max-width: 250px;
             height: auto;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            object-fit: contain;
         }
 
         h2 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            padding: 0 10px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 500;
+            flex: 0 0 auto;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
         }
 
         .loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top-color: #00a0e9;
             border-radius: 50%;
-            border-top: 4px solid #00a0e9;
             animation: spin 1s linear infinite;
-            margin: 15px auto;
+        }
+
+        .loader:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 3px solid transparent;
+            border-top-color: rgba(0, 160, 233, 0.6);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
         }
 
         @keyframes spin {
@@ -71,23 +115,28 @@
 
         .message {
             color: #666;
-            margin: 15px 0;
-            font-size: 1rem;
-            padding: 0 10px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin: 0;
+        }
+
+        .countdown {
+            color: #999;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-top: 0.2rem;
         }
 
         .redirect-link {
             color: #00a0e9;
             text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 20px;
-            border: 1px solid #00a0e9;
-            border-radius: 5px;
+            padding: 0.8rem 2rem;
+            border: 2px solid #00a0e9;
+            border-radius: 8px;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             background-color: transparent;
-            margin-bottom: 10px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            min-width: 140px;
         }
 
         .redirect-link:hover {
@@ -95,106 +144,52 @@
             color: white;
         }
 
-        .countdown {
-            color: #999;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile Styles */
-        @media screen and (max-width: 480px) {
+        /* 高螢幕手機優化 */
+        @media screen and (min-height: 800px) {
             .container {
-                padding: 15px;
-                width: 95%;
-                margin: 10px;
+                padding: 3rem 2rem;
+                gap: 2rem;
             }
 
             .logo {
-                max-width: 140px;
+                max-width: 280px;
             }
 
-            h2 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
+            .loading-section {
+                gap: 1.8rem;
             }
 
-            .loader {
-                width: 32px;
-                height: 32px;
-                border-width: 3px;
-                border-top-width: 3px;
-            }
-
-            .message {
-                font-size: 0.9rem;
-                margin: 12px 0;
-            }
-
-            .redirect-link {
-                padding: 6px 16px;
-                font-size: 0.9rem;
-            }
-
-            .countdown {
-                font-size: 0.8rem;
+            .loader-container {
+                width: 70px;
+                height: 70px;
             }
         }
 
-        /* Small Mobile Styles */
-        @media screen and (max-width: 320px) {
+        /* 較小螢幕手機優化 */
+        @media screen and (max-height: 700px) {
             .container {
-                padding: 12px;
-                margin: 8px;
-            }
-
-            .logo {
-                max-width: 120px;
-            }
-
-            h2 {
-                font-size: 1.1rem;
-                margin-bottom: 12px;
-            }
-
-            .message {
-                font-size: 0.85rem;
-            }
-
-            .redirect-link {
-                padding: 5px 14px;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Tablet Styles */
-        @media screen and (min-width: 768px) {
-            .container {
-                padding: 30px;
+                padding: 1.5rem;
+                gap: 1.2rem;
             }
 
             .logo {
                 max-width: 200px;
             }
 
-            h2 {
-                font-size: 1.8rem;
+            .loader-container {
+                width: 50px;
+                height: 50px;
             }
 
-            .message {
-                font-size: 1.1rem;
-            }
-
-            .redirect-link {
-                padding: 10px 25px;
-                font-size: 1rem;
+            .loading-section {
+                gap: 1.2rem;
             }
         }
 
-        /* Touch Device Optimization */
-        @media (hover: non) {
-            .redirect-link:hover {
-                background-color: transparent;
-                color: #00a0e9;
+        /* 觸控優化 */
+        @media (hover: none) {
+            .redirect-link {
+                -webkit-tap-highlight-color: transparent;
             }
 
             .redirect-link:active {
@@ -211,15 +206,32 @@
         </div>
 
         <h2>即將進入目標網站</h2>
-        <div class="loader"></div>
-        <p class="message">正在為您重定向...</p>
-        <div class="countdown">倒數 <span id="timer">3</span> 秒</div>
+        
+        <div class="loading-section">
+            <div class="loader-container">
+                <div class="loader"></div>
+            </div>
+            <div>
+                <p class="message">正在為您重定向...</p>
+                <div class="countdown">倒數 <span id="timer">3</span> 秒</div>
+            </div>
+        </div>
+
         <a id="manual-link" href="#" class="redirect-link">立即前往</a>
     </div>
 
     <script>
         const targetUrl = "https://www.find.org.tw/home/index/";
         
+        // 修復 iOS Safari 100vh 問題
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+        window.addEventListener('resize', () => {
+            vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        });
+
         let timeLeft = 3;
         const timerElement = document.getElementById('timer');
         const countdownInterval = setInterval(() => {
