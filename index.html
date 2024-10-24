@@ -4,11 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>重定向中...</title>
-    <script>
-        // 將這裡改為您的目標網址
-        const targetUrl = "https://www.find.org.tw/home/index/";
-        window.location.replace(targetUrl);
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,11 +18,17 @@
 
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             max-width: 80%;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
         }
 
         h2 {
@@ -40,7 +41,7 @@
             height: 48px;
             border: 5px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 5px solid #3498db;
+            border-top: 5px solid #00a0e9; /* 改用 FIND logo 的藍色 */
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
@@ -56,18 +57,18 @@
         }
 
         .redirect-link {
-            color: #3498db;
+            color: #00a0e9; /* 改用 FIND logo 的藍色 */
             text-decoration: none;
             display: inline-block;
             margin-top: 10px;
             padding: 8px 15px;
-            border: 1px solid #3498db;
+            border: 1px solid #00a0e9; /* 改用 FIND logo 的藍色 */
             border-radius: 5px;
             transition: all 0.3s ease;
         }
 
         .redirect-link:hover {
-            background-color: #3498db;
+            background-color: #00a0e9; /* 改用 FIND logo 的藍色 */
             color: white;
         }
 
@@ -80,6 +81,12 @@
 </head>
 <body>
     <div class="container">
+        <!-- FIND Logo -->
+        <svg class="logo" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="100" font-family="serif" font-size="120" font-weight="bold">F<tspan fill="#00a0e9">i</tspan>ND</text>
+            <circle cx="185" cy="30" r="20" fill="#00a0e9"/>
+        </svg>
+
         <h2>即將進入目標網站</h2>
         <div class="loader"></div>
         <p class="message">正在為您重定向...</p>
@@ -89,7 +96,7 @@
 
     <script>
         // 設定目標網址
-        const targetUrl = "https://www.find.org.tw/index/center/index/DEC/";
+        const targetUrl = "https://www.find.org.tw/home/index/";
         
         // 設定倒數計時器
         let timeLeft = 3;
