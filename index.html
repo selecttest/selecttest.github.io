@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>重定向中...</title>
+    <script>
+        // 將這裡改為您的目標網址
+        const targetUrl = "https://www.find.org.tw/index/center/index/DEC/";
+        window.location.replace(targetUrl);
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .message {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h2>正在重定向...</h2>
+        <p>如果沒有自動跳轉，請<a id="manual-link" href="#">點擊這裡</a></p>
+    </div>
+    <script>
+        document.getElementById('manual-link').href = targetUrl;
+    </script>
+</body>
+</html>
